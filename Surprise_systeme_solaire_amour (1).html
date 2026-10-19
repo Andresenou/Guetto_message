@@ -365,7 +365,8 @@
     }
 
     #soundToggle,
-    #toggleMessages {
+    #toggleMessages,
+    #homeBtn {
       padding: 11px 16px;
       font-size: 10px;
       letter-spacing: .08em;
@@ -381,7 +382,8 @@
       cursor: pointer;
     }
 
-    #toggleMessages {
+    #toggleMessages,
+    #homeBtn {
       display: none;
     }
 
@@ -391,8 +393,16 @@
       gap: 6px;
     }
 
+    .fly #homeBtn,
+    .done #homeBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     #soundToggle:hover,
-    #toggleMessages:hover {
+    #toggleMessages:hover,
+    #homeBtn:hover {
       background: rgba(25, 32, 60, .92);
       border-color: rgba(255, 255, 255, .6);
       transform: translateY(-2px);
@@ -407,15 +417,16 @@
 
     @media(max-width: 520px) {
       #topControls {
-        right: 10px;
-        top: 10px;
-        gap: 6px;
+        right: 8px;
+        top: 8px;
+        gap: 5px;
       }
       #soundToggle,
-      #toggleMessages {
-        padding: 8px 11px;
-        font-size: 9px;
-        letter-spacing: .04em;
+      #toggleMessages,
+      #homeBtn {
+        padding: 7px 9px;
+        font-size: 8.5px;
+        letter-spacing: .03em;
       }
     }
 
@@ -500,11 +511,36 @@
     #final {
       margin-top: 26px;
       opacity: 0;
-      transition: opacity 1.5s
+      transition: opacity 1.5s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     #final.show {
       opacity: 1
+    }
+
+    #restartBtn {
+      font: 500 11px 'Montserrat', system-ui, sans-serif;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 11px 22px;
+      background: rgba(15, 20, 40, .85);
+      color: var(--gold);
+      border: 1px solid rgba(245, 214, 160, .45);
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);
+      transition: all .25s ease;
+    }
+
+    #restartBtn:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: rgba(30, 40, 75, .9);
+      border-color: var(--rose);
+      color: #fff;
     }
 
     .heart {
@@ -1411,7 +1447,8 @@
         aria-label="Message suivant">Suivant →</button><button id="pauseMessages"
         aria-label="Arrêter le défilement automatique" aria-pressed="false">⏸ Stop</button><button id="hideCardBtn"
         aria-label="Masquer les messages pour profiter du spectacle">👁 Masquer</button></div>
-    <div id="final"><button id="yes">Bon, viens prendre ton câlin 😂❤️</button></div>
+    <div id="final"><button id="yes">Bon, viens prendre ton câlin 😂❤️</button><button id="restartBtn"
+        aria-label="Recommencer ou changer de messages">🔄 Recommencer / Autre choix</button></div>
     <div id="sign">— André, ton casse-pieds préféré 😇</div>
   </div>
   <div id="start">
@@ -1423,6 +1460,7 @@
   <div id="topControls">
     <button id="soundToggle" aria-label="Couper ou activer la musique">♫ Son activé</button>
     <button id="toggleMessages" aria-label="Masquer ou afficher les messages" aria-pressed="false">👁 Masquer les messages</button>
+    <button id="homeBtn" aria-label="Retourner à l'accueil ou rafraîchir la page" title="Retourner à l'accueil / Rafraîchir">🏠 Accueil</button>
   </div>
   <audio id="bgMusic" preload="auto" loop playsinline src="reine_dadju.mp3">
   </audio>
@@ -1696,9 +1734,26 @@
         setMessagesVisibility(!messagesHidden);
       };
     }
+    var homeBtn = document.getElementById("homeBtn");
+    if (homeBtn) {
+      homeBtn.onclick = function () {
+        window.location.reload();
+      };
+    }
+    var restartBtn = document.getElementById("restartBtn");
+    if (restartBtn) {
+      restartBtn.onclick = function () {
+        window.location.reload();
+      };
+    }
     document.addEventListener("keydown", function (e) {
       if ((e.key === "h" || e.key === "H" || e.key === "m" || e.key === "M") && document.body.classList.contains("done")) {
         setMessagesVisibility(!messagesHidden);
+      }
+      if (e.key === "Escape" || e.key === "r" || e.key === "R") {
+        if (document.body.classList.contains("fly") || document.body.classList.contains("done")) {
+          window.location.reload();
+        }
       }
     });
 
