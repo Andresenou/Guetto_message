@@ -278,22 +278,27 @@
       color: #1a1020;
     }
 
-    @media(max-width:420px) {
+    @media(max-width: 560px) {
       .choiceButtons {
         flex-direction: column;
+        align-items: center;
         width: 100%;
-        max-width: 320px
+        max-width: 330px;
+        gap: 12px;
       }
 
       .choiceButtons button {
         width: 100%;
-        padding: 14px 18px
+        max-width: 100%;
+        padding: 15px 22px;
+        font-size: 13px;
+        letter-spacing: .15em;
       }
     }
 
     button {
       font: 500 13px 'Montserrat', system-ui, sans-serif;
-      letter-spacing: .25em;
+      letter-spacing: .2em;
       text-transform: uppercase;
       color: #1a1020;
       background: linear-gradient(135deg, var(--gold), var(--rose));
@@ -302,56 +307,101 @@
       padding: 16px 34px;
       cursor: pointer;
       box-shadow: 0 10px 40px rgba(255, 143, 163, .4);
-      transition: transform .3s
+      transition: transform .3s, box-shadow .3s;
+      touch-action: manipulation;
     }
 
     button:hover {
-      transform: translateY(-3px) scale(1.03)
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    /* Messages sans aucun arrière-plan noir */
+    .message-box {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 8px 12px 14px;
+      width: 100%;
+      max-width: 620px;
+      margin: 4px auto 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 4;
     }
 
     #messageControls {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      width: 100%;
+      pointer-events: auto;
+    }
+
+    .control-row-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .control-row-sub {
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-top: 14px;
-      pointer-events: auto;
-      flex-wrap: wrap
+      width: 100%;
     }
 
     #messageControls button {
-      padding: 12px 18px;
-      font-size: 10px;
-      letter-spacing: .1em;
-      background: rgba(15, 20, 40, .82);
+      padding: 9px 18px;
+      font-size: clamp(11px, 2.7vw, 12.5px);
+      letter-spacing: .08em;
+      background: rgba(255, 255, 255, 0.12);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, .38);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, .25)
+      border: 1px solid rgba(255, 214, 160, 0.45);
+      border-radius: 30px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform .25s, border-color .25s, background .25s, box-shadow .25s;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    #messageControls button:hover,
+    #messageControls button:active {
+      transform: translateY(-2px) scale(1.03);
+      border-color: var(--rose);
+      background: rgba(255, 143, 163, 0.3);
+      box-shadow: 0 6px 20px rgba(255, 143, 163, 0.45);
     }
 
     #messageCount {
-      font-size: 11px;
+      font-size: clamp(13px, 3.4vw, 15px);
+      font-weight: 600;
+      color: var(--gold);
       letter-spacing: .12em;
-      min-width: 48px;
-      opacity: .9
-    }
-
-    @media(max-width:420px) {
-      #messageControls {
-        gap: 7px;
-        max-width: 360px
-      }
-
-      #messageControls button {
-        padding: 10px 11px;
-        font-size: 9px
-      }
+      min-width: 58px;
+      text-align: center;
     }
 
     #topControls {
       position: fixed;
       right: 18px;
-      top: 18px;
+      top: max(16px, env(safe-area-inset-top, 0px) + 6px);
       z-index: 8;
       display: none;
       gap: 10px;
@@ -367,19 +417,21 @@
     #soundToggle,
     #toggleMessages,
     #homeBtn {
-      padding: 11px 16px;
-      font-size: 10px;
-      letter-spacing: .08em;
+      padding: 10px 16px;
+      font-size: 11px;
+      letter-spacing: .06em;
       pointer-events: auto;
-      background: rgba(15, 20, 40, .78);
+      background: rgba(15, 20, 42, .85);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, .35);
+      border: 1px solid rgba(255, 255, 255, .38);
       border-radius: 40px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, .25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: all .3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all .25s ease;
       cursor: pointer;
+      min-height: 38px;
+      touch-action: manipulation;
     }
 
     #toggleMessages,
@@ -403,30 +455,49 @@
     #soundToggle:hover,
     #toggleMessages:hover,
     #homeBtn:hover {
-      background: rgba(25, 32, 60, .92);
-      border-color: rgba(255, 255, 255, .6);
+      background: rgba(25, 34, 68, .95);
+      border-color: rgba(255, 214, 160, .8);
       transform: translateY(-2px);
     }
 
     body.messages-hidden #toggleMessages {
-      background: linear-gradient(135deg, rgba(255, 143, 163, 0.4), rgba(245, 214, 160, 0.4));
+      background: linear-gradient(135deg, rgba(255, 143, 163, 0.45), rgba(245, 214, 160, 0.45));
       border-color: var(--rose);
       box-shadow: 0 0 16px rgba(255, 143, 163, 0.6);
       color: #fff;
     }
 
-    @media(max-width: 520px) {
+    @media(max-width: 600px) {
       #topControls {
         right: 8px;
-        top: 8px;
-        gap: 5px;
+        top: max(8px, env(safe-area-inset-top, 0px) + 4px);
+        gap: 6px;
       }
       #soundToggle,
       #toggleMessages,
       #homeBtn {
-        padding: 7px 9px;
-        font-size: 8.5px;
+        padding: 8px 12px;
+        font-size: 10px;
         letter-spacing: .03em;
+        min-height: 35px;
+      }
+      .fly #hud #bat,
+      .done #hud #bat {
+        display: none;
+      }
+      #hud #rec {
+        left: 12px;
+        top: max(10px, env(safe-area-inset-top, 0px) + 4px);
+      }
+      #hud #alt {
+        left: 12px;
+        bottom: max(8px, env(safe-area-inset-bottom, 0px) + 4px);
+        font-size: 10px;
+      }
+      #hud #gps {
+        right: 12px;
+        bottom: max(8px, env(safe-area-inset-bottom, 0px) + 4px);
+        font-size: 10px;
       }
     }
 
@@ -443,18 +514,59 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 24px;
+      padding: max(60px, env(safe-area-inset-top, 0px) + 40px) 16px max(24px, env(safe-area-inset-bottom, 0px) + 20px);
       opacity: 0;
       filter: blur(14px);
-      transition: opacity 1.2s cubic-bezier(.25, .8, .25, 1), filter 1.2s, transform 0.8s cubic-bezier(.25, .8, .25, 1), visibility 0.8s;
+      transition: opacity 1.2s cubic-bezier(.25, .8, .25, 1), filter 1.2s, transform 0.8s cubic-bezier(.25, .8, .25, 1), visibility 0.8s, left 0.8s cubic-bezier(.25, .8, .25, 1), top 0.8s cubic-bezier(.25, .8, .25, 1), width 0.8s cubic-bezier(.25, .8, .25, 1), height 0.8s cubic-bezier(.25, .8, .25, 1);
       pointer-events: none;
-      z-index: 3
+      z-index: 3;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
+    }
+
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 580px;
+      margin: auto 0;
+      box-sizing: border-box;
     }
 
     .done #card {
       opacity: 1;
       filter: none;
-      pointer-events: auto
+      pointer-events: auto;
+    }
+
+    /* Ordinateur : messages placés sur le côté droit (50%) */
+    @media(min-width: 769px) {
+      body.done:not(.messages-hidden) #card {
+        left: 50%;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        padding: max(60px, env(safe-area-inset-top, 0px) + 30px) 36px max(24px, env(safe-area-inset-bottom, 0px) + 20px) 16px;
+      }
+    }
+
+    /* Téléphone : messages placés en bas (50%) */
+    @media(max-width: 768px) {
+      body.done:not(.messages-hidden) #card {
+        left: 0;
+        right: 0;
+        top: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        padding: 6px 14px max(14px, env(safe-area-inset-bottom, 0px) + 6px);
+        justify-content: flex-start;
+      }
     }
 
     body.messages-hidden #card {
@@ -466,18 +578,21 @@
     }
 
     #card small {
-      letter-spacing: .5em;
+      letter-spacing: .35em;
       text-transform: uppercase;
-      font-size: 11px;
-      color: var(--gold)
+      font-size: clamp(10.5px, 2.6vw, 12px);
+      color: var(--gold);
+      display: block;
+      margin-bottom: 2px;
     }
 
     #card h2 {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-weight: 500;
-      font-size: clamp(44px, 12vw, 104px);
-      margin: 10px 0 18px;
-      text-shadow: 0 4px 40px rgba(0, 0, 0, .6)
+      font-size: clamp(36px, 9.5vw, 76px);
+      margin: 4px 0 12px;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, .7);
+      line-height: 1.15;
     }
 
     #card h2 em {
@@ -485,14 +600,18 @@
     }
 
     #line {
-      min-height: 84px;
-      max-width: 560px;
+      min-height: 96px;
+      width: 100%;
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
-      font-size: clamp(20px, 4.6vw, 30px);
-      line-height: 1.4;
-      text-shadow: 0 2px 20px rgba(0, 0, 0, .8);
-      transition: opacity .9s, transform .9s
+      font-weight: 500;
+      font-size: clamp(23px, 6.2vw, 32px);
+      line-height: 1.48;
+      color: #fffefb;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+      transition: opacity .35s ease, transform .35s ease;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     #line.out {
@@ -501,46 +620,118 @@
     }
 
     #sign {
-      margin-top: 26px;
-      font-weight: 300;
-      letter-spacing: .2em;
-      font-size: 12px;
-      opacity: .8
+      margin-top: 16px;
+      font-weight: 400;
+      letter-spacing: .15em;
+      font-size: clamp(12px, 3.2vw, 13px);
+      color: rgba(255, 255, 255, 0.88);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
     }
 
     #final {
-      margin-top: 26px;
+      margin-top: 16px;
       opacity: 0;
       transition: opacity 1.5s;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      width: 100%;
     }
 
     #final.show {
       opacity: 1
     }
 
-    #restartBtn {
-      font: 500 11px 'Montserrat', system-ui, sans-serif;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      padding: 11px 22px;
-      background: rgba(15, 20, 40, .85);
-      color: var(--gold);
-      border: 1px solid rgba(245, 214, 160, .45);
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, .3);
-      transition: all .25s ease;
+    #yes {
+      padding: clamp(14px, 3.2vw, 17px) clamp(22px, 5.5vw, 34px);
+      font-size: clamp(12px, 3.2vw, 13.5px);
+      letter-spacing: .18em;
+      max-width: 92%;
     }
 
-    #restartBtn:hover {
+    #restartBtn {
+      font: 500 clamp(10.5px, 2.7vw, 11.5px) 'Montserrat', system-ui, sans-serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--gold);
+      border: 1px solid rgba(245, 214, 160, .5);
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all .25s ease;
+      max-width: 92%;
+      touch-action: manipulation;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    #restartBtn:hover,
+    #restartBtn:active {
       transform: translateY(-2px) scale(1.03);
-      background: rgba(30, 40, 75, .9);
+      background: rgba(255, 143, 163, 0.28);
       border-color: var(--rose);
       color: #fff;
+    }
+
+    @media(max-width: 768px) {
+      .message-box {
+        padding: 2px 6px 6px;
+        margin: 0 auto 6px;
+      }
+      #line {
+        font-size: clamp(16px, 4.3vw, 21px);
+        line-height: 1.4;
+        min-height: 56px;
+      }
+      #card h2 {
+        font-size: clamp(24px, 6.6vw, 34px);
+        margin: 2px 0 4px;
+      }
+      #card small {
+        font-size: 10.5px;
+        letter-spacing: .22em;
+      }
+      .orn {
+        margin: -4px 0 6px;
+      }
+      .control-row-main,
+      .control-row-sub {
+        gap: 6px;
+      }
+      #messageControls {
+        margin-top: 6px;
+        gap: 6px;
+      }
+      #messageControls button {
+        padding: 7px 12px;
+        font-size: 10.5px;
+        min-height: 34px;
+      }
+      #messageCount {
+        font-size: 12px;
+        min-width: 46px;
+      }
+      #final {
+        margin-top: 6px;
+        gap: 6px;
+      }
+      #yes {
+        padding: 10px 18px;
+        font-size: 11.5px;
+        letter-spacing: .12em;
+      }
+      #restartBtn {
+        padding: 7px 14px;
+        font-size: 9.5px;
+      }
+      #sign {
+        margin-top: 6px;
+        font-size: 10.5px;
+      }
     }
 
     .heart {
@@ -832,7 +1023,8 @@
     #messageControls button:hover {
       transform: translateY(-3px) scale(1.04);
       border-color: var(--rose);
-      background: rgba(65, 35, 60, .9)
+      background: rgba(255, 143, 163, 0.32);
+      box-shadow: 0 6px 20px rgba(255, 143, 163, 0.45);
     }
 
     #final.show {
@@ -1215,14 +1407,9 @@
       }
     }
 
-    /* Carte finale */
+    /* Carte finale sans voile noir */
     #card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(ellipse at center, rgba(8, 12, 28, .55), transparent 62%)
+      display: none !important;
     }
 
     #card small {
@@ -1369,25 +1556,55 @@
       }
     }
 
-    #heart3d {
+    #heartSystem {
       position: absolute;
       left: 50%;
       top: 50%;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      transition: transform 0.9s cubic-bezier(.25, .8, .25, 1);
+      will-change: transform;
+    }
+
+    @media(min-width: 769px) {
+      body.done:not(.messages-hidden) #heartSystem {
+        transform: translate(-25vw, 0);
+      }
+    }
+
+    @media(max-width: 768px) {
+      body.done:not(.messages-hidden) #heartSystem {
+        transform: translate(0, -25vh);
+      }
+    }
+
+    body.messages-hidden #heartSystem {
+      transform: translate(0, 0) !important;
+    }
+
+    #heart3d {
+      position: absolute;
+      left: 0;
+      top: 0;
       transform: translate(-50%, -50%);
       pointer-events: none;
       opacity: 0;
-      transition: opacity 3s 1s;
-      filter: drop-shadow(0 0 34px rgba(255, 90, 130, .55))
+      transition: opacity 3s 1s, width 0.8s ease, height 0.8s ease;
+      filter: drop-shadow(0 0 34px rgba(255, 90, 130, .55));
     }
 
     .fly #heart3d {
-      opacity: .96
+      opacity: .96;
     }
   </style>
 </head>
 
 <body>
-  <div id="world"><svg id="terrain" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg></div>
+  <div id="world">
+    <svg id="terrain" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg>
+    <div id="heartSystem"></div>
+  </div>
   <div id="tint"></div>
   <div class="bar t"></div>
   <div class="bar b"></div>
@@ -1437,19 +1654,29 @@
       2.3912° E</span>
   </div>
   <div id="card">
-    <small>mission spéciale : te taquiner 😈</small>
-    <h2>Oh <em id="nm">toi</em>…</h2>
-    <div class="orn" aria-hidden="true"><b></b><span>♥</span><b></b></div>
-    <div id="line" aria-live="polite"></div>
-    <div id="prog" aria-hidden="true"><i></i></div>
-    <div id="messageControls" aria-label="Navigation des messages"><button id="prevMessage"
-        aria-label="Message précédent">← Précédent</button><span id="messageCount">1 / 7</span><button id="nextMessage"
-        aria-label="Message suivant">Suivant →</button><button id="pauseMessages"
-        aria-label="Arrêter le défilement automatique" aria-pressed="false">⏸ Stop</button><button id="hideCardBtn"
-        aria-label="Masquer les messages pour profiter du spectacle">👁 Masquer</button></div>
-    <div id="final"><button id="yes">Bon, viens prendre ton câlin 😂❤️</button><button id="restartBtn"
-        aria-label="Recommencer ou changer de messages">🔄 Recommencer / Autre choix</button></div>
-    <div id="sign">— André, ton casse-pieds préféré 😇</div>
+    <div class="card-inner">
+      <small>mission spéciale : te taquiner 😈</small>
+      <h2>Oh <em id="nm">toi</em>…</h2>
+      <div class="orn" aria-hidden="true"><b></b><span>♥</span><b></b></div>
+      <div class="message-box">
+        <div id="line" aria-live="polite"></div>
+        <div id="prog" aria-hidden="true"><i></i></div>
+        <div id="messageControls" aria-label="Navigation des messages">
+          <div class="control-row-main">
+            <button id="prevMessage" aria-label="Message précédent">← Précédent</button>
+            <span id="messageCount">1 / 7</span>
+            <button id="nextMessage" aria-label="Message suivant">Suivant →</button>
+          </div>
+          <div class="control-row-sub">
+            <button id="pauseMessages" aria-label="Arrêter le défilement automatique" aria-pressed="false">⏸ Stop</button>
+            <button id="hideCardBtn" aria-label="Masquer les messages pour profiter du spectacle">👁 Masquer</button>
+          </div>
+        </div>
+      </div>
+      <div id="final"><button id="yes">Bon, viens prendre ton câlin 😂❤️</button><button id="restartBtn"
+          aria-label="Recommencer ou changer de messages">🔄 Recommencer / Autre choix</button></div>
+      <div id="sign">— André, ton casse-pieds préféré 😇</div>
+    </div>
   </div>
   <div id="start">
     <h1>Guetto, tu choisis quoi ? 😏❤️</h1>
@@ -1720,6 +1947,9 @@
         cardBtn.textContent = shortText;
         cardBtn.setAttribute("aria-pressed", aria);
       }
+      if (window.updateLayout) {
+        window.updateLayout();
+      }
     }
 
     var toggleMessagesBtn = document.getElementById("toggleMessages");
@@ -1805,6 +2035,36 @@
         if (document.body.classList.contains("done") && !autoAdvancePaused) resetAutoAdvance();
       }, { passive: true });
     });
+
+    // Support du balayage tactile (swipe) sur mobile pour changer de message
+    (function () {
+      var touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+      var cardEl = document.getElementById("card");
+      if (!cardEl) return;
+      cardEl.addEventListener("touchstart", function (e) {
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartTime = performance.now();
+        }
+      }, { passive: true });
+
+      cardEl.addEventListener("touchend", function (e) {
+        if (!document.body.classList.contains("done") || messagesHidden) return;
+        if (e.changedTouches && e.changedTouches.length === 1) {
+          var dx = e.changedTouches[0].clientX - touchStartX;
+          var dy = e.changedTouches[0].clientY - touchStartY;
+          var dt = performance.now() - touchStartTime;
+          if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.3 && dt < 650) {
+            if (dx < 0) {
+              changeMessage(1);
+            } else {
+              changeMessage(-1);
+            }
+          }
+        }
+      }, { passive: true });
+    })();
     var sparkleTimer = null, statsTimer = null, rippleTimer = null;
     function createSpark() {
       var s = document.createElement("i");
@@ -1881,6 +2141,9 @@
       })(t0);
       setTimeout(function () {
         document.body.classList.add("done");
+        if (window.updateLayout) {
+          window.updateLayout();
+        }
         renderMessage(false); resetAutoAdvance(); hearts();
       }, 8200);
     }
@@ -1984,12 +2247,29 @@
   <script>
     // ===== Grand cœur 3D qui tourne sur lui-même comme la Terre =====
     (function () {
-      var world = document.getElementById("world"), cv = document.createElement("canvas"), cx = cv.getContext("2d");
-      cv.id = "heart3d"; world.appendChild(cv);
+      var world = document.getElementById("world"), hs = document.getElementById("heartSystem") || world, cv = document.createElement("canvas"), cx = cv.getContext("2d");
+      cv.id = "heart3d"; hs.appendChild(cv);
       // Retire le cœur plat de la carte (on garde le décor) : il est remplacé par la version 3D
       var after = false; Array.prototype.slice.call(svg.children).forEach(function (c) { if (c === defs) after = true; else if (after) c.remove() });
-      var Q = 0; function fit() { var S = Math.round(Math.min(innerWidth, innerHeight) * .7); cv.style.width = cv.style.height = S + "px"; Q = Math.round(S * Math.min((window.devicePixelRatio || 1) * 1.5, 3)); cv.width = cv.height = Q }
+      var Q = 0;
+      function fit() {
+        var isDone = document.body.classList.contains("done") && !document.body.classList.contains("messages-hidden");
+        var isMobile = window.innerWidth <= 768;
+        var availW = innerWidth, availH = innerHeight;
+        if (isDone) {
+          if (isMobile) {
+            availH = innerHeight * 0.5;
+          } else {
+            availW = innerWidth * 0.5;
+          }
+        }
+        var S = Math.round(Math.min(availW, availH) * (isMobile ? 0.72 : 0.68));
+        cv.style.width = cv.style.height = S + "px";
+        Q = Math.round(S * Math.min((window.devicePixelRatio || 1) * 1.5, 3));
+        cv.width = cv.height = Q;
+      }
       fit(); addEventListener("resize", fit);
+      window.fitHeart3d = fit;
       // Maillage : cœur « gonflé » (profil elliptique), méridiens et parallèles comme un globe
       var K = 36, N = 72, D = .62, V = [], F = [], a, b;
       for (a = 0; a <= K; a++) {
@@ -2045,12 +2325,12 @@
   <style>
     .orbit {
       position: absolute;
-      left: 50%;
-      top: 50%;
+      left: 0;
+      top: 0;
       transform: translate(-50%, -50%);
       pointer-events: none;
       opacity: 0;
-      transition: opacity 3s 2s
+      transition: opacity 3s 2s, width 0.8s ease, height 0.8s ease
     }
 
     .fly .orbit {
@@ -2060,10 +2340,10 @@
   <script>
     // ===== Système solaire d'amour : le grand cœur = le Soleil, cœurs & stickers = les planètes =====
     (function () {
-      var world = document.getElementById("world"), heart = document.getElementById("heart3d");
+      var world = document.getElementById("world"), hs = document.getElementById("heartSystem") || world, heart = document.getElementById("heart3d");
       var back = document.createElement("canvas"), front = document.createElement("canvas");
       back.className = front.className = "orbit";
-      world.insertBefore(back, heart); world.appendChild(front);
+      hs.insertBefore(back, heart); hs.appendChild(front);
       var bx = back.getContext("2d"), fxc = front.getContext("2d");
       var TILT = -.22, K = .28, CT = Math.cos(TILT), ST = Math.sin(TILT), slow = matchMedia("(prefers-reduced-motion:reduce)").matches ? .3 : 1;
       var DEF = [[.5, .00046, ["💘", "💋", "😍"]], [.68, .00032, ["💖", "🌹", "🥰", "💌"]], [.85, .00024, ["💝", "💍", "🦋", "😘"]], [1, .00017, ["💕", "💞", "🧸", "💗", "✨"]]];
@@ -2076,9 +2356,19 @@
       }
       function build() {
         dpr = Math.min(window.devicePixelRatio || 1, 2);
-        base = Math.min(innerWidth * .95, innerHeight * 1.35) / 2; W = Math.round(base * 2.5);
+        var isDone = document.body.classList.contains("done") && !document.body.classList.contains("messages-hidden");
+        var isMobile = window.innerWidth <= 768;
+        var availW = innerWidth, availH = innerHeight;
+        if (isDone) {
+          if (isMobile) {
+            availH = innerHeight * 0.5;
+          } else {
+            availW = innerWidth * 0.5;
+          }
+        }
+        base = Math.min(availW * .95, availH * 1.35) / 2; W = Math.round(base * 2.5);
         [back, front].forEach(function (c) { c.style.width = c.style.height = W + "px"; c.width = c.height = Math.round(W * dpr) });
-        var px = Math.max(24, Math.min(60, base * .14)); P = []; B = [];
+        var px = Math.max(18, Math.min(isMobile ? 36 : 54, base * .14)); P = []; B = [];
         DEF.forEach(function (d, i) {
           d[2].forEach(function (ch, j) {
             var z = .8 + ((i * 7 + j * 3) % 5) * .1;
@@ -2089,6 +2379,12 @@
         var s1 = sprite("♥", px * .32, "#ff8fa3"), s2 = sprite("♥", px * .32, "#f5d6a0");
         for (var k = 0; k < 80; k++)B.push({ a: Math.random() * 6.2832, r: (.895 + Math.random() * .06) * base, img: k % 2 ? s1 : s2 })
       }
+      build(); addEventListener("resize", build);
+      window.buildOrbits = build;
+      window.updateLayout = function () {
+        if (window.fitHeart3d) window.fitHeart3d();
+        if (window.buildOrbits) window.buildOrbits();
+      };
       function pos(a, R) { var X = Math.cos(a) * R, Y = Math.sin(a) * R * K; return [W / 2 + X * CT - Y * ST, W / 2 + X * ST + Y * CT, Math.sin(a)] }
       function put(img, x, y, dep) { var g = dep > 0 ? fxc : bx, s = img.width / dpr * (1 + .28 * dep); g.globalAlpha = .75 + .25 * (dep + 1) / 2; g.drawImage(img, x - s / 2, y - s / 2, s, s) }
       function ring(R) {
@@ -2143,11 +2439,37 @@
     }
 
     #tapHint {
-      bottom: max(22px, env(safe-area-inset-bottom, 0px))
+      bottom: max(14px, env(safe-area-inset-bottom, 0px) + 6px);
+      z-index: 2;
+    }
+
+    body.done:not(.messages-hidden) #tapHint {
+      display: none;
+    }
+
+    body.messages-hidden #tapHint {
+      display: block;
+      animation: hintShow 8s ease 1s both;
+      z-index: 6;
     }
 
     #wish {
-      top: 15vh
+      top: max(55px, 8vh);
+    }
+
+    @media(min-width: 769px) {
+      body.done:not(.messages-hidden) #wish {
+        left: 0;
+        right: 50%;
+        top: max(40px, 6vh);
+      }
+    }
+
+    @media(max-width: 768px) {
+      #wish {
+        top: max(42px, env(safe-area-inset-top, 0px) + 32px);
+        font-size: 13.5px;
+      }
     }
 
     .done #tapHint {
@@ -2192,18 +2514,40 @@
       function burst(x, y, n, dots) { for (var i = 0; i < n; i++) { var a = rnd(0, 6.283), v = rnd(1.5, 6); Pt.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.5, l: 1, d: rnd(.012, .02), s: dots ? rnd(2, 4) : rnd(10, 22), h: !dots, c: COL[Math.floor(rnd(0, COL.length))] }) } }
       function pulse(t, s) { W.push({ t: t, s: s }) }
       function comet(x, y, t) {
-        var cx = w / 2, cy = h / 2, sg = Math.random() < .5 ? -1 : 1;
+        var isDone = body.classList.contains("done") && !body.classList.contains("messages-hidden");
+        var isMobile = w <= 768;
+        var cx = w / 2, cy = h / 2;
+        if (isDone) {
+          if (isMobile) {
+            cy = h * 0.25;
+          } else {
+            cx = w * 0.25;
+          }
+        }
+        var sg = Math.random() < .5 ? -1 : 1;
         C.push({ x0: x, y0: y, qx: (x + cx) / 2 - (cy - y) * .4 * sg, qy: (y + cy) / 2 + (cx - x) * .4 * sg, t: t, tr: [] })
       }
       function draw(t) {
         if (T0 === null && body.classList.contains("fly")) { T0 = t; nextStar = t + 14500 }
         g.setTransform(D, 0, 0, D, 0, 0); g.clearRect(0, 0, w, h);
         if (T0 === null) return;
-        var cx = w / 2, cy = h / 2, base = Math.min(w * .95, h * 1.35) / 2, e = t - T0, i, k;
+        var isDone = body.classList.contains("done") && !body.classList.contains("messages-hidden");
+        var isMobile = w <= 768;
+        var cx = w / 2, cy = h / 2, availW = w, availH = h;
+        if (isDone) {
+          if (isMobile) {
+            cy = h * 0.25;
+            availH = h * 0.5;
+          } else {
+            cx = w * 0.25;
+            availW = w * 0.5;
+          }
+        }
+        var base = Math.min(availW * .95, availH * 1.35) / 2, e = t - T0, i, k;
         g.globalCompositeOperation = "lighter"; g.textAlign = "center"; g.lineCap = "round";
         // 1. Constellation : tout l'univers est un cœur, dessiné étoile après étoile
         if (e > 5500) {
-          var p = reduce ? 1 : Math.min(1, (e - 5500) / 11000), s = Math.min(w * .9 / 34, h * .86 / 30), n = Math.floor(p * N), fr = p * N - n, br = p < 1 ? 1 : .8 + .2 * Math.sin(t * .0012);
+          var p = reduce ? 1 : Math.min(1, (e - 5500) / 11000), s = Math.min(availW * .9 / 34, availH * .86 / 30), n = Math.floor(p * N), fr = p * N - n, br = p < 1 ? 1 : .8 + .2 * Math.sin(t * .0012);
           g.lineWidth = 1.2; g.strokeStyle = "rgba(255,226,190," + .32 * br + ")"; g.beginPath();
           for (i = 0; i <= n && i < N; i++) {
             var A = hp(i), B = hp(i + 1), ex = i < n ? 1 : fr;
