@@ -1700,6 +1700,61 @@
   </audio>
 
   <script>
+    // ===== Screen Wake Lock : empêcher l'écran de s'éteindre =====
+    var wakeLock = null;
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', function () {
+            wakeLock = null;
+          });
+        }
+      } catch (err) {
+        // Wake Lock refusé ou non supporté, on essaie le fallback
+        wakeLockFallback();
+      }
+    }
+
+    // Fallback pour les navigateurs sans Wake Lock API : vidéo invisible en boucle
+    var wakeLockVideo = null;
+    function wakeLockFallback() {
+      if (wakeLockVideo) return;
+      try {
+        wakeLockVideo = document.createElement('video');
+        wakeLockVideo.setAttribute('playsinline', '');
+        wakeLockVideo.setAttribute('muted', '');
+        wakeLockVideo.muted = true;
+        wakeLockVideo.loop = true;
+        wakeLockVideo.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
+        // Micro vidéo noire encodée en base64 (WebM, 1s)
+        wakeLockVideo.src = 'data:video/webm;base64,GkXfo0AgQoaBAUL3gQFC8oEEQvOBCEKCQAR3ZWJtQoeBAkKFgQIYU4BnQI0VSalmQCgq17FAAw9CQE2AQAZ3aGFtbXlXQUAGd2hhbW15RIlACECPQAAAAAAAFlSua0AxrkAu14EBY8WBAZyBACK1nEADdW5khkAFVl9WUDglhohAA1ZQOIOBAeBABrCBCLqBCB9DtnVBMlRzuot0b2F2ZXJzaW9u';
+        document.body.appendChild(wakeLockVideo);
+        wakeLockVideo.play().catch(function () { });
+      } catch (e) { }
+    }
+
+    function releaseWakeLock() {
+      if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+      }
+      if (wakeLockVideo) {
+        wakeLockVideo.pause();
+        wakeLockVideo.remove();
+        wakeLockVideo = null;
+      }
+    }
+
+    // Ré-acquérir le wake lock quand l'utilisateur revient sur l'onglet
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible' && (document.body.classList.contains('fly') || document.body.classList.contains('done'))) {
+        requestWakeLock();
+      }
+    });
+  </script>
+
+  <script>
     // ✏️ PERSONNALISE ICI : le prénom (ou ajoute ?n=Prénom à la fin du lien)
     var NAME = "Guetto";
     var BABIERE_MESSAGES = [
@@ -1975,12 +2030,14 @@
     var homeBtn = document.getElementById("homeBtn");
     if (homeBtn) {
       homeBtn.onclick = function () {
+        releaseWakeLock();
         window.location.reload();
       };
     }
     var restartBtn = document.getElementById("restartBtn");
     if (restartBtn) {
       restartBtn.onclick = function () {
+        releaseWakeLock();
         window.location.reload();
       };
     }
@@ -2139,6 +2196,7 @@
       messageIndex = 0;
       messageCount.textContent = "1 / " + COMPLIMENTS.length;
       startMusic();
+      requestWakeLock();
       startCinematicMotion();
       document.body.classList.add("fly");
       var t0 = performance.now();
